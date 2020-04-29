@@ -46,11 +46,17 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 			case 1:
-				view.printMessage(" Cargando Datos, Porfavor paciencia");
+				view.printMessage(" Cargando Datos, Porfavor paciencia..");
+
+				view.printMessage("Cola Creada");
+				modelo.cargarDatosComparendos();
+				modelo.cargarDatosPolicia();
+				view.printMessage("\n"+"\n"+"Cola Creada");
+				view.printMessage("\n"+ " Tengo una cola de comparendos de tamaño: ");
+				view.printMessage("\n"+ "  "+ modelo.darColaTamano(modelo.darColaComparendo()));
+				view.printMessage("\n"+ " Tengo una cola de Tombos de tamaño: ");
+				view.printMessage("\n"+ "  "+ modelo.darColaTamano(modelo.darColaTombos()));
 				
-				view.printMessage(" En caso de error borrar las tildes en el Archivo Json de bogota");
-				//modelo.cargarDatos();
-				view.printMessage("arbol creado");
 				//view.printMessage("Numero actual de elementos " + modelo.darTamano() );
 
 				break;

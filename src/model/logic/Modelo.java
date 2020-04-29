@@ -25,12 +25,13 @@ import model.data_structures.MaxPQ;
  * Definicion del modelo del mundo
  * @param <T>
  */
-public class Modelo<T> {
+public class Modelo<T extends Comparable<T> > {
 	public static String PATH = "./data/Comparendos_DEI_2018_Bogota_D.C.geojson";
 	//public static String PATH = "./data/Comparendos_DEI_2018_Bogota_D.C_small.geojson";
-	public static String PATHPOLICE = "./data/Comparendos_DEI_2018_Bogota_D.C_small.geojson";
+	public static String PATHPOLICE = "./data/estacionespoli.geojson";
 
-
+	public MaxPQ<Comparendo> comparendosCola = new MaxPQ<Comparendo>();
+	public MaxPQ<Policia> tombosCola = new MaxPQ<Policia>();
 	public Modelo(){
 
 
@@ -73,7 +74,7 @@ public class Modelo<T> {
 
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, DES_INFRAC, LOCALIDAD, MUNICIPIO, longitud, latitud);
-
+				comparendosCola.insert(c);
 
 
 			}}
@@ -110,8 +111,8 @@ public class Modelo<T> {
 				int EPOIULOCAL = e.getAsJsonObject().get("properties").getAsJsonObject().get("EPOIULOCAL").getAsInt();
 
 				Policia	c= new Policia(OBJECTID, EPODESCRIP, EPODIR_SITIO, EPOLONGITU, EPOLATITUD, EPOSERVICIO, EPOHORARIO, EPOTELEFON, EPOIULOCAL);
+				tombosCola.insert(c);
 
-				
 
 
 
@@ -123,15 +124,23 @@ public class Modelo<T> {
 			e.printStackTrace();
 		}
 	}
-	
 
 
 
 
 
 
+public String darColaTamano (MaxPQ<T> cola) {
+	return "" +cola.size();
+}
 
+public MaxPQ<Comparendo> darColaComparendo () {
+	return this.comparendosCola;
+}
 
+public MaxPQ<Policia> darColaTombos(){
+	return this.tombosCola;
+}
 }
 
 

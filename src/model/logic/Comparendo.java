@@ -14,6 +14,7 @@ public class Comparendo implements Comparable<Comparendo> {
 	private double longitud;
 	private double latitud;
 
+
 	public Comparendo(int id, Date fecha, String medioDete, String claseDeVehiculo, String tipoDeServicio, String codigoInfraccion,String descripcionInfraccion, String localidad, String municipio, double longitud, double latitud) {
 
 		this.id = id;
@@ -37,6 +38,8 @@ public class Comparendo implements Comparable<Comparendo> {
 		this.municipio=municipio;
 
 		this.latitud = latitud;
+		
+
 	}
 
 	public int dartId() {
@@ -186,4 +189,6 @@ public class Comparendo implements Comparable<Comparendo> {
 		
 		return comparacion;
 	}
+	
+	
 }

@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class Vertex  <K, E extends Comparable<E>> implements Iterator<K> {
+public class Vertex  <K, E extends Comparable<E>> implements Iterator<Vertex<K,E>> {
 K llave ;
 E contiene;
 boolean marca;
@@ -11,10 +11,10 @@ Vertex<K,E> Siguiente;
 
 
 public Vertex() {
-
+	llave = null;
 	marca = false;
 	proviene = null;
-
+	contiene = null;
 }
 
 public K darllave() {
@@ -62,8 +62,8 @@ public boolean hasNext() {
 	
 }
 
-public K next() {
-	return this.siguiente().darllave();
+public Vertex<K, E> next() {
+	return this.siguiente();
 }
 
 public void cambiarInfo(E info) {

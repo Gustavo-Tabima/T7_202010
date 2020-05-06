@@ -29,7 +29,7 @@ public class Modelo<T extends Comparable<T> > {
 	public static String PATH = "./data/Comparendos_DEI_2018_Bogota_D.C.geojson";
 	//public static String PATH = "./data/Comparendos_DEI_2018_Bogota_D.C_small.geojson";
 	public static String PATHPOLICE = "./data/estacionespoli.geojson";
-
+	public MallaVial mallavial;
 	public MaxPQ<Comparendo> comparendosCola = new MaxPQ<Comparendo>();
 	public MaxPQ<Policia> tombosCola = new MaxPQ<Policia>();
 	public Modelo(){

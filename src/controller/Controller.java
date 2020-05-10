@@ -48,14 +48,6 @@ public class Controller {
 			case 1:
 				view.printMessage(" Cargando Datos, Porfavor paciencia..");
 
-				view.printMessage("Cola Creada");
-				modelo.cargarDatosComparendos();
-				modelo.cargarDatosPolicia();
-				view.printMessage("\n"+"\n"+"Cola Creada");
-				view.printMessage("\n"+ " Tengo una cola de comparendos de tamaño: ");
-				view.printMessage("\n"+ "  "+ modelo.darColaTamano(modelo.darColaComparendo()));
-				view.printMessage("\n"+ " Tengo una cola de Tombos de tamaño: ");
-				view.printMessage("\n"+ "  "+ modelo.darColaTamano(modelo.darColaTombos()));
 				
 				//view.printMessage("Numero actual de elementos " + modelo.darTamano() );
 

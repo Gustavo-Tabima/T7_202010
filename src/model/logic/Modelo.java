@@ -36,9 +36,9 @@ public class Modelo<T extends Comparable<T> > {
 	public static String PATH = "./data/Comparendos_DEI_2018_Bogota_D.C_small.geojson";
 	public static String PATHVERTEX = "./data/bogota_vertices.txt";
 	public static String PATHPOLICE = "./data/estacionespoli.geojson";
-	public MallaVial mallavial;
 	public MaxPQ<Comparendo> comparendosCola = new MaxPQ<Comparendo>();
 	public MaxPQ<Policia> tombosCola = new MaxPQ<Policia>();
+	public GrafoNoDirigido<String, InfoVertice, InfoArco> grafoCarga= new GrafoNoDirigido<String, InfoVertice, InfoArco>();
 	public Modelo(){
 
 
@@ -46,57 +46,90 @@ public class Modelo<T extends Comparable<T> > {
 
 	}
 
-	public void cargarDatosGrafo() {
-		File archivo = new File(PATHVERTEX);
-		File archivoA = new File(PATHARCOS);
-		FileReader fr;
-		try {
-			fr = new FileReader(archivo);
-			BufferedReader bf = new BufferedReader(fr);
-			int lineas = 0;
-			while (bf.readLine() != null) { lineas++;
-			}
-			String linea = bf.readLine();
-			GrafoNoDirigido<Integer, Double, Double>  grafo = new GrafoNoDirigido<Integer, Double, Double>(lineas);
-			while(linea !=null){
-				String [] lineasnuevas =  linea.split(",");
 
-//				Vertex<Integer,Double,Double> n = new Vertex<Integer, Double, Double>(Integer.parseInt(lineasnuevas[0]),Double.parseDouble(lineasnuevas[1]));
-				linea = bf.readLine();
+	/**
+	 * Metodo para cargar grafo 
+	 */
+	
+	//aca esta cargando la malla
+	public GrafoNoDirigido<String, InfoVertice, InfoArco> cargarGrafo()
+	{
+		ArrayList<String> verticesCargar = new ArrayList<String>();
+		
+		ArrayList<String> arcosCargar =new ArrayList<String>();
+		try
+		{
+			BufferedReader bfferVertice = new BufferedReader(new FileReader("./data/bogota_vertices.txt"));
+			String lineaVetice;
+			while((lineaVetice = bfferVertice.readLine()) != null)
+			{
+				verticesCargar.add(lineaVetice);
+			}
+			bfferVertice.close();
+	
+			grafoCarga = new GrafoNoDirigido<String, InfoVertice, InfoArco>();
+			int numeroVertices = verticesCargar.size();
+			
+			//carga de los vertices
+			
+			for(int i = 0; verticesCargar != null && i < numeroVertices; i++)
+			{
+				String lineaActual = verticesCargar.get(i);
 				
+				String[] infoVertice = lineaActual.split(",");
+				
+				String id = infoVertice[0];
+				
+				double longitudVertice = Double.parseDouble(infoVertice[1]); 
+				
+				double LatitudVertices = Double.parseDouble(infoVertice[2]); 
+				
+				grafoCarga.addVertex(id, new InfoVertice(longitudVertice, LatitudVertices));
 			}
-			bf.close();
-			fr.close();
 			
-			
-		} catch (  IOException e ) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
-		try {
-		FileReader fra = new FileReader(archivoA);
-		BufferedReader bfa = new BufferedReader(fra);
-		
-		String lineaA = bfa.readLine();
-		while(lineaA !=null){
-			String [] lineasnuevasA =  lineaA.split(" ");
+			// carga de arcos
 
-//			Aqui debería ir la creación de cada Arco según los vértices creados anteriormente.
-			lineaA = bfa.readLine();
+		
+			BufferedReader bufferArcos = new BufferedReader(new FileReader("./data/bogota_arcos.txt"));
+			String lineasArcos;
+			while((lineasArcos = bufferArcos.readLine()) != null)
+			{
+				arcosCargar.add(lineasArcos);
+			}
+			bufferArcos.close();
 			
+			int numeroArcos = arcosCargar.size();
+			for(int i = 0; arcosCargar != null && i < numeroArcos; i++)
+			{
+				String lineaActual = arcosCargar.get(i);
+				String[] valores = lineaActual.split(",");
+				String id = valores[0];
+				for(int j = 1; j < valores.length; j++)
+				{
+					double pLonIn = grafoCarga.getInfoVertex(id).getLongitud();
+					double pLatIn = grafoCarga.getInfoVertex(id).getLatitud();
+					double pLonFi = grafoCarga.getInfoVertex(valores[j]).getLongitud();
+					double pLatFi = grafoCarga.getInfoVertex(valores[j]).getLatitud();
+
+					double pCosto = Haversine.distance(pLatIn, pLonIn, pLatFi, pLonFi);
+					grafoCarga.addEdge(id, valores[j], new InfoArco(pCosto));
+				}
+			}
+
+		
 		}
-		
-		bfa.close();
-		fra.close();
-		
-		
-		} catch (IOException ex) {
-			ex.printStackTrace();
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
+		return grafoCarga;
+	
 		
 		
 	}
+
+	
+	
 
 	public void cargarDatosPolicia() {
 

@@ -24,10 +24,7 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	//lista de todos los marcados
 	private boolean marcados[];
 
-	/**
-	 * Referencia del numero del vertice
-	 */
-	private int idReferenciaNum;
+	private int numeroAsignadoVertice;
 
 
 
@@ -36,7 +33,7 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 		vertices = new SeparateChainingHashST<K, Vertex<K,V,E>>();
 		numeroVertices = 0;
 		numeroVertices = 0;
-		idReferenciaNum = 0;
+		numeroAsignadoVertice = 0;
 	}
 
 
@@ -89,10 +86,10 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	// se supone que segun el documento se va a hacer una lectura de la mlla vial ,e entonce el id de el vertice va a ser un int y la info la lat y long
 	public void addVertex(K idVertex, V infoVertex)
 	{
-		Vertex<K,V,E> v = new Vertex<K,V,E>(idVertex, infoVertex, idReferenciaNum);
+		Vertex<K,V,E> v = new Vertex<K,V,E>(idVertex, infoVertex, numeroAsignadoVertice);
 		vertices.put(idVertex, v);
 		numeroVertices++;
-		idReferenciaNum++;
+		numeroAsignadoVertice++;
 	}
 
 // crea arco basado en vertices y se le asigna el precio, toca mirar eso
@@ -226,13 +223,13 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 		
 		for(int j = 0; j < vertices.size(); j++)
 		{
-			if(marcados[j] = true && idReferenciaNum == j)
+			if(marcados[j] = true && numeroAsignadoVertice == j)
 			{
 				componentesConectados++;
 			}
 			else
 			{
-				idReferenciaNum++;
+				numeroAsignadoVertice++;
 			}
 		}
 		return componentesConectados;

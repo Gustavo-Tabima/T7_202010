@@ -14,11 +14,6 @@ public class TestsGrafo {
 private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 	
 	
-	// Escenarios
-	
-	/**
-	 * Escenario 1 para UnGraph1
-	 */
 	@Before
 	public void setUp1()
 	{
@@ -47,7 +42,7 @@ private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 
 	
 	@Test
-	void testV() 
+public	void testV() 
 	{
 		setUp1();
 		
@@ -56,10 +51,9 @@ private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 	}
 	
 	@Test
-	void testE()
+public	void testE()
 	{
 		setUp1();
-		
 		
 		assertEquals(3, grafPrueba.E());
 	}
@@ -67,7 +61,7 @@ private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 	
 	
 	@Test
-	void testAddVertex() 
+public	void testAddVertex() 
 	{
 		setUp1();
 		
@@ -79,7 +73,7 @@ private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 
 	
 	@Test
-	void testAddEdge() 
+public	void testAddEdge() 
 	{
 		setUp1();
 		
@@ -92,7 +86,7 @@ private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 
 	
 	@Test
-	void testUncheck() 
+public	void testUncheck() 
 	{
 		setUp1();
 		
@@ -102,7 +96,7 @@ private GrafoNoDirigido<String, ArrayList<Integer>, InfoArco> grafPrueba;
 	
 	@Test
 	
-	void testDfs()
+public	void testDfs()
 	{
 		setUp1();
 		

@@ -106,13 +106,20 @@ public class Modelo<T extends Comparable<T> > {
 				String id = valores[0];
 				for(int j = 1; j < valores.length; j++)
 				{
-					double pLonIn = grafoCarga.getInfoVertex(id).getLongitud();
-					double pLatIn = grafoCarga.getInfoVertex(id).getLatitud();
-					double pLonFi = grafoCarga.getInfoVertex(valores[j]).getLongitud();
-					double pLatFi = grafoCarga.getInfoVertex(valores[j]).getLatitud();
+					
+					
+					if (grafoCarga.getInfoVertex(id)!=null && grafoCarga.getInfoVertex(valores[j])!=null) {
+						
+						
+						double pLonIn = grafoCarga.getInfoVertex(id).getLongitud();
+						double pLatIn = grafoCarga.getInfoVertex(id).getLatitud();
+						double pLonFi = grafoCarga.getInfoVertex(valores[j]).getLongitud();
+						double pLatFi = grafoCarga.getInfoVertex(valores[j]).getLatitud();
 
-					double pCosto = Haversine.distance(pLatIn, pLonIn, pLatFi, pLonFi);
-					grafoCarga.addEdge(id, valores[j], new InfoArco(pCosto));
+						double pCosto = Haversine.distance(pLatIn, pLonIn, pLatFi, pLonFi);
+						grafoCarga.addEdge(id, valores[j], new InfoArco(pCosto));
+					}
+					
 				}
 			}
 

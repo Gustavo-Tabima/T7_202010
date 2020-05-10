@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 {
 
+	//k va a se la llave , V la infromacion que se le vya a meter al vertice, y E va a ser la informacion de el arco
 
 	private int numeroVertices;
 

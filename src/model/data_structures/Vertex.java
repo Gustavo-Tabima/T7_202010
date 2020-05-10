@@ -17,18 +17,18 @@ public class Vertex<K extends Comparable<K>,V,E>
     private int idNumumeroVertice;
     
     //cuanta gente esta conectada a este vertice
-    private int componenteConectado;
+    private int numConectados;
     
     
     
     
     //lista de arcos que empiezan en este vertice
 
-    private ArrayList<Arco<K, E>> arcosSalen;
+    private ArrayList<Arco<K, E>> arcosEmp;
     
     
     //lista de arcos que acaban en este vertice
-    private ArrayList<Arco<K, E>> arcosEntran;
+    private ArrayList<Arco<K, E>> arcosFini;
 
     
     
@@ -42,10 +42,11 @@ public class Vertex<K extends Comparable<K>,V,E>
 	{
 		this.idVeritice = pIdVertice;
 		this.infoVertice = pValorVertice;
-		arcosSalen = new ArrayList<Arco<K,E>>();
-		arcosEntran =  new ArrayList<Arco<K,E>>();
-		componenteConectado = -1;
+		arcosEmp = new ArrayList<Arco<K,E>>();
+		arcosFini =  new ArrayList<Arco<K,E>>();
 		idNumumeroVertice = pIdNumero;
+		numConectados = -1;
+
 	}
 	
 	
@@ -75,41 +76,41 @@ public class Vertex<K extends Comparable<K>,V,E>
 	
 	public int getComponenteConectado()
 	{
-		return componenteConectado;
+		return numConectados;
 	}
 	
 	
 	public void setComponenteConectado(int pComponente)
 	{
-		componenteConectado = pComponente;
+		numConectados = pComponente;
 	}
 	
 	public ArrayList<Arco<K, E>> getArcosSaliente()
 	{
-		return arcosSalen;
+		return arcosEmp;
 	}
 	
 	
 	public void anadirArcoEntrante(Arco<K,E> pArco)
 	{
-		arcosEntran.add(pArco);
+		arcosFini.add(pArco);
 	}
 	
 	
 	public void anadirArcoSaliente(Arco<K,E> pArco)
 	{
-		arcosSalen.add(pArco);
+		arcosEmp.add(pArco);
 	}
 	
 	
 	public Arco<K,E> getEdge(K idVertexFin)
 	{
 		Arco<K,E> encontrado = null;
-		for (int i = 0; i < arcosSalen.size() && encontrado == null; i++) 
+		for (int i = 0; i < arcosEmp.size() && encontrado == null; i++) 
 		{
-			if(arcosSalen.get(i).getIdVerticeFinal().compareTo(idVertexFin) == 0)
+			if(arcosEmp.get(i).getIdVerticeFinal().compareTo(idVertexFin) == 0)
 			{
-				encontrado = arcosSalen.get(i);
+				encontrado = arcosEmp.get(i);
 			}
 		}
 		return encontrado;

@@ -102,7 +102,7 @@ public class Modelo<T extends Comparable<T> > {
 			for(int i = 0; arcosCargar != null && i < numeroArcos; i++)
 			{
 				String lineaActual = arcosCargar.get(i);
-				String[] valores = lineaActual.split(",");
+				String[] valores = lineaActual.split(" ");
 				String id = valores[0];
 				for(int j = 1; j < valores.length; j++)
 				{
@@ -129,7 +129,9 @@ public class Modelo<T extends Comparable<T> > {
 	}
 
 	
-	
+	public String probarcarga() {
+		return grafoCarga.toString();
+	}
 
 	public void cargarDatosPolicia() {
 

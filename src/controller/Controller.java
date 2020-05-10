@@ -32,14 +32,7 @@ public class Controller {
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
 		String dato = "";
-		int datoInt = 0;
-		int datoSig;
-		String respuesta = "";
-		String axulio = "";
-		String momento ="0.3";
-		String pana ="0.3";
-
-		String entradaAdicional;
+	
 		while( !fin ){
 			view.printMenu();
 
@@ -47,10 +40,12 @@ public class Controller {
 			switch(option){
 			case 1:
 				view.printMessage(" Cargando Datos, Porfavor paciencia..");
-
+				modelo.cargarGrafo();
 				
-				//view.printMessage("Numero actual de elementos " + modelo.darTamano() );
-
+				view.printMessage(" ");
+	
+				view.printMessage("Grafo cargado exitosamente");
+				view.printMessage("Le pedimos porfavor revise el código del Modelo en caso de necesitar entender que pasó");
 				break;
 
 		

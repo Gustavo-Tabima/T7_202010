@@ -2,19 +2,19 @@ package model.data_structures;
 
 import model.logic.Haversine;
 
-public class Arco<K extends Comparable<K>, V>
+public class Arco
 {	
 
-	private K IdPRimerVertice;
+	private int IdPRimerVertice;
 	
-	private K IdFinalVertice;
+	private int IdFinalVertice;
 	
 	Haversine haversinio;
-	private V costoArco;
+	private double costoArco;
 	
 	
 	 
-	public Arco(K pVerIni, K pVerFin, V pCost)
+	public Arco(int pVerIni, int pVerFin, double pCost)
 	{
 		IdPRimerVertice = pVerIni;
 		IdFinalVertice = pVerFin;
@@ -22,20 +22,20 @@ public class Arco<K extends Comparable<K>, V>
 	}
 	
 	
-	public K getIdVerticeInicio()
+	public int getIdVerticeInicio()
 	{
 		return IdPRimerVertice;
 	}
 	
 	
-	public K getIdVerticeFinal()
+	public int getIdVerticeFinal()
 	{
 		return IdFinalVertice;
 	}
 	
 
      
-	public V getCostArc() 
+	public double getCostArc() 
     {
         return  costoArco;
     }
@@ -43,7 +43,7 @@ public class Arco<K extends Comparable<K>, V>
     /**
      * cambia el costo que tiene el arco
      */
-    public void setCostArc(V pCost) 
+    public void setCostArc(double pCost) 
     {
         costoArco = pCost;
     }

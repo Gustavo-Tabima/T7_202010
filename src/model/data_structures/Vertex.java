@@ -3,9 +3,9 @@ package model.data_structures;
 import java.util.ArrayList;
 
 
-public class Vertex<K extends Comparable<K>,V,E>
+public class Vertex<V>
 {
-	private K idVeritice;
+	private int idVeritice;
 	
 	
 	
@@ -13,10 +13,7 @@ public class Vertex<K extends Comparable<K>,V,E>
 	
 	public V infoVertice;
 	
-	//el numero del vertice, el numero en plan este es el 5( el quinto anadido)
-    private int idNumumeroVertice;
-    
-    //cuanta gente esta conectada a este vertice
+	//cuanta gente esta conectada a este vertice
     private int numConectados;
     
     
@@ -24,11 +21,11 @@ public class Vertex<K extends Comparable<K>,V,E>
     
     //lista de arcos que empiezan en este vertice
 
-    private ArrayList<Arco<K, E>> arcosEmp;
+    private ArrayList<Arco> arcosEmp;
     
     
     //lista de arcos que acaban en este vertice
-    private ArrayList<Arco<K, E>> arcosFini;
+    private ArrayList<Arco> arcosFini;
 
     
     
@@ -38,29 +35,24 @@ public class Vertex<K extends Comparable<K>,V,E>
     
     // constructor
     
-	public Vertex(K pIdVertice, V pValorVertice, int pIdNumero)
+	public Vertex(int pIdVertice, V pValorVertice)
 	{
 		this.idVeritice = pIdVertice;
 		this.infoVertice = pValorVertice;
-		arcosEmp = new ArrayList<Arco<K,E>>();
-		arcosFini =  new ArrayList<Arco<K,E>>();
-		idNumumeroVertice = pIdNumero;
+		arcosEmp = new ArrayList<Arco>();
+		arcosFini =  new ArrayList<Arco>();
 		numConectados = -1;
 
 	}
 	
 	
-	public K getIdVertice()
+	public int getIdVertice()
 	{
 		return idVeritice;
 	}
 	
 	
-	public int getIdNumeroVertice()
-	{
-		return idNumumeroVertice;
-	}
-	
+
 	
 	public V getInfoVertice()
 	{
@@ -68,7 +60,7 @@ public class Vertex<K extends Comparable<K>,V,E>
 	}
 	
 	
-	public void setValorVertice(V pValor)
+	public void setInfoVertice(V pValor)
 	{
 		infoVertice = pValor;
 	}
@@ -85,30 +77,30 @@ public class Vertex<K extends Comparable<K>,V,E>
 		numConectados = pComponente;
 	}
 	
-	public ArrayList<Arco<K, E>> getArcosSaliente()
+	public ArrayList<Arco> getArcosSaliente()
 	{
 		return arcosEmp;
 	}
 	
 	
-	public void anadirArcoEntrante(Arco<K,E> pArco)
+	public void anadirArcoEntrante(Arco pArco)
 	{
 		arcosFini.add(pArco);
 	}
 	
 	
-	public void anadirArcoSaliente(Arco<K,E> pArco)
+	public void anadirArcoSaliente(Arco pArco)
 	{
 		arcosEmp.add(pArco);
 	}
 	
 	
-	public Arco<K,E> getEdge(K idVertexFin)
+	public Arco getEdge(int idVertexFin)
 	{
-		Arco<K,E> encontrado = null;
+		Arco encontrado = null;
 		for (int i = 0; i < arcosEmp.size() && encontrado == null; i++) 
 		{
-			if(arcosEmp.get(i).getIdVerticeFinal().compareTo(idVertexFin) == 0)
+			if(arcosEmp.get(i).getIdVerticeFinal() == idVertexFin)
 			{
 				encontrado = arcosEmp.get(i);
 			}

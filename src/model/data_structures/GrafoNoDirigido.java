@@ -3,7 +3,7 @@ package model.data_structures;
 import java.util.ArrayList;
 
 
-public class GrafoNoDirigido<K extends Comparable<K>,V,E>
+public class GrafoNoDirigido<V>
 {
 
 	//k va a se la llave , V la infromacion que se le vya a meter al vertice, y E va a ser la informacion de el arco
@@ -12,7 +12,7 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 
 	private int numeroArcos;
 
-	private SeparateChainingHashST<K, Vertex<K,V,E>> vertices;
+	private SeparateChainingHashST<Integer, Vertex> vertices;
 
 
 	private Queue<Integer>[] adjacentesVertices;
@@ -30,7 +30,7 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 
 	public GrafoNoDirigido() 
 	{
-		vertices = new SeparateChainingHashST<K, Vertex<K,V,E>>();
+		vertices = new SeparateChainingHashST<Integer, Vertex>();
 		numeroVertices = 0;
 		numeroVertices = 0;
 		numeroAsignadoVertice = 0;
@@ -84,25 +84,24 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 
 
 	// se supone que segun el documento se va a hacer una lectura de la mlla vial ,e entonce el id de el vertice va a ser un int y la info la lat y long
-	public void addVertex(K idVertex, V infoVertex)
+	public void addVertex(int idVertex, V infoVertex)
 	{
-		Vertex<K,V,E> v = new Vertex<K,V,E>(idVertex, infoVertex, numeroAsignadoVertice);
+		Vertex v = new Vertex(idVertex, infoVertex);
 		vertices.put(idVertex, v);
 		numeroVertices++;
-		numeroAsignadoVertice++;
 	}
 
 // crea arco basado en vertices y se le asigna el precio, toca mirar eso
-	public void addEdge(K idVertexIni, K idVertexFin, E pCost) 
+	public void addEdge(int idVertexIni, int idVertexFin, double pCost) 
 	{
-		Vertex<K,V,E> verticeIni = vertices.get(idVertexIni);
-		Vertex<K,V,E> verticeFini = vertices.get(idVertexFin);
+		Vertex verticeIni = vertices.get(idVertexIni);
+		Vertex verticeFini = vertices.get(idVertexFin);
 
-		if(!idVertexIni.equals(idVertexFin))
+		if(!(idVertexIni==idVertexFin))
 		{
 			if(verticeIni != null && verticeFini != null)
 			{
-				Arco<K,E> arco = new Arco<K,E>(idVertexIni, idVertexFin, pCost);
+				Arco arco = new Arco(idVertexIni, idVertexFin, pCost);
 				verticeIni.anadirArcoSaliente(arco);
 				verticeFini.anadirArcoEntrante(arco);
 				numeroArcos++;
@@ -111,12 +110,12 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	}
 
 
-	public V getInfoVertex(K idVertex)
+	public V getInfoVertex(int idVertex)
 	{
-		Vertex<K,V,E> v = vertices.get(idVertex);
+		Vertex v = vertices.get(idVertex);
 		if(v != null)
 		{
-			return v.getInfoVertice();
+			return (V) v.getInfoVertice();
 		}
 		else
 		{
@@ -125,20 +124,20 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	}
 
 
-	public void setInfoVertex(K idVertex, V infoVertex)
+	public void setInfoVertex(int idVertex, V infoVertex)
 	{
-		Vertex<K,V,E> v = vertices.get(idVertex);
+		Vertex v = vertices.get(idVertex);
 		if(v != null)
 		{
-			v.setValorVertice(infoVertex);;
+			v.setInfoVertice(infoVertex);;
 		}
 	}
 
 // este es el metdo que da el costo de un arco basado en los vertices metidos 
-	public double getCostArc(K idVertexIni, K idVertexFin)
+	public double getCostArc(int idVertexIni, int idVertexFin)
 	{
 		double costArc = 0.0;
-		Arco<K,E> arCosto = getArco(idVertexIni, idVertexFin);
+		Arco arCosto = getArco(idVertexIni, idVertexFin);
 		if(arCosto != null)
 		{
 			costArc = (double) arCosto.getCostArc();
@@ -151,9 +150,9 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	}
 
 	//cambia el costo
-	public void setCostArc(K idVertexIni, K idVertexFin, E pCost)
+	public void setCostArc(int idVertexIni, int idVertexFin, double pCost)
 	{
-		Arco<K,E> v = getArco(idVertexIni, idVertexFin);
+		Arco v = getArco(idVertexIni, idVertexFin);
 		if(v != null)
 		{
 			v.setCostArc(pCost);
@@ -161,13 +160,13 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	}
 
 	 
-	public Arco<K,E> getArco(K idVertexIni, K idVertexFin)
+	public Arco getArco(int idVertexIni, int idVertexFin)
 	{
-		Vertex<K,V,E> verticeActual = vertices.get(idVertexIni);
-		Arco<K,E> reactorArc = null;
+		Vertex verticeActual = vertices.get(idVertexIni);
+		Arco reactorArc = null;
 		if(verticeActual != null)
 		{			
-			Arco<K,E> arctual = verticeActual.getEdge(idVertexFin);
+			Arco arctual = verticeActual.getEdge(idVertexFin);
 			if(arctual != null)
 			{
 				reactorArc = arctual;
@@ -192,22 +191,22 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	}
 
 	// metdo de dfs :v
-	public void dfs(K vertex)
+	public void dfs(int vertex)
 	{
 		iniciarDfs();
 		
-		Vertex<K,V,E> verticeActual = vertices.get(vertex);
-		marcados[verticeActual.getIdNumeroVertice()] = true;
+		Vertex verticeActual = vertices.get(vertex);
+		marcados[ verticeActual.getIdVertice()] = true;
 
-		ArrayList<Vertex<K,V,E>> arreglo = getAdjacencias(vertex);
+		ArrayList<Vertex> arreglo = getAdjacencias(vertex);
 		
 		for(int i = 0; i < arreglo.size(); i++)
 		{
-			Vertex<K,V,E> vertice = arreglo.get(i);
+			Vertex vertice = arreglo.get(i);
 			
-			if (! marcados[vertice.getIdNumeroVertice()])
+			if (! marcados[vertice.getIdVertice()])
 			{
-				edgeToDfs[vertice.getIdNumeroVertice()] = verticeActual.getIdNumeroVertice();
+				edgeToDfs[vertice.getIdVertice()] = verticeActual.getIdVertice();
 				
 				dfs(vertice.getIdVertice());
 				
@@ -236,41 +235,41 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 	}
 
 	//array de vertices adjacentes a un indicado
-	public ArrayList<Vertex<K,V,E>> getAdjacencias(K idVertex)
+	public ArrayList<Vertex> getAdjacencias(int idVertex)
 	{
-		ArrayList<Vertex<K,V,E>> arreglo = new ArrayList<Vertex<K,V,E>>();
+		ArrayList<Vertex> arreglo = new ArrayList<Vertex>();
 		
-		Vertex<K,V,E> v = vertices.get(idVertex);
+		Vertex v = vertices.get(idVertex);
 		if(v != null)
 		{
 			for(int i = 0; i < v.getArcosSaliente().size(); i++)
 			{
-				arreglo.add(vertices.get(v.getArcosSaliente().get(i).getIdVerticeFinal()));
+				arreglo.add(vertices.get(((Arco) v.getArcosSaliente().get(i)).getIdVerticeFinal()));
 			}
 		}
 		return arreglo;
 	}
 
 	
-	public Iterable<K> adj(K idVertex) 
+	public Iterable<Integer> adj(int idVertex) 
 	{
-		Queue<K> cola = new Queue<K>();
-		Vertex<K,V,E> verticeActual = vertices.get(idVertex);
+		Queue<Integer> cola = new Queue<Integer>();
+		Vertex verticeActual = vertices.get(idVertex);
 		if(verticeActual != null)
 		{
 			for(int i = 0; i < verticeActual.getArcosSaliente().size(); i++)
 			{
-				cola.enqueue(verticeActual.getArcosSaliente().get(i).getIdVerticeFinal());
+				cola.enqueue(((Arco) verticeActual.getArcosSaliente().get(i)).getIdVerticeFinal());
 			}
 		}
-		return (Iterable<K>) cola; 
+		return (Iterable<Integer>) cola; 
 	}
 
 	//iterador despues de hacer metdo cc y dfs creo
-	public Iterable<K> getCC(K idVertex) 
+	public Iterable<Integer> getCC(int idVertex) 
 	{
-		Queue<K> cola = new Queue<K>();
-		Vertex<K,V,E> verticeActual = vertices.get(idVertex);
+		Queue<Integer> cola = new Queue<Integer>();
+		Vertex verticeActual = vertices.get(idVertex);
 		if(verticeActual != null)
 		{
 			dfs(idVertex);
@@ -280,7 +279,7 @@ public class GrafoNoDirigido<K extends Comparable<K>,V,E>
 				{
 					if(verticeActual.getComponenteConectado() == j)
 					{
-						cola.enqueue(verticeActual.getArcosSaliente().get(i).getIdVerticeFinal());
+						cola.enqueue(((Arco) verticeActual.getArcosSaliente().get(i)).getIdVerticeFinal());
 					}
 				}
 			}

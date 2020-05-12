@@ -38,7 +38,7 @@ public class Modelo<T extends Comparable<T> > {
 	public static String PATHPOLICE = "./data/estacionespoli.geojson";
 	public MaxPQ<Comparendo> comparendosCola = new MaxPQ<Comparendo>();
 	public MaxPQ<Policia> tombosCola = new MaxPQ<Policia>();
-	public GrafoNoDirigido<String, InfoVertice, InfoArco> grafoCarga= new GrafoNoDirigido<String, InfoVertice, InfoArco>();
+	public GrafoNoDirigido< InfoVertice> grafoCarga= new GrafoNoDirigido< InfoVertice>();
 	public Modelo(){
 
 
@@ -52,7 +52,7 @@ public class Modelo<T extends Comparable<T> > {
 	 */
 	
 	//aca esta cargando la malla
-	public GrafoNoDirigido<String, InfoVertice, InfoArco> cargarGrafo()
+	public GrafoNoDirigido< InfoVertice> cargarGrafo()
 	{
 		ArrayList<String> verticesCargar = new ArrayList<String>();
 		
@@ -67,7 +67,7 @@ public class Modelo<T extends Comparable<T> > {
 			}
 			bfferVertice.close();
 	
-			grafoCarga = new GrafoNoDirigido<String, InfoVertice, InfoArco>();
+			grafoCarga = new GrafoNoDirigido<InfoVertice>();
 			int numeroVertices = verticesCargar.size();
 			
 			//carga de los vertices
@@ -78,7 +78,7 @@ public class Modelo<T extends Comparable<T> > {
 				
 				String[] infoVertice = lineaActual.split(",");
 				
-				String id = infoVertice[0];
+				int id = Integer.parseInt(infoVertice[0]);
 				
 				double longitudVertice = Double.parseDouble(infoVertice[1]); 
 				
@@ -103,21 +103,21 @@ public class Modelo<T extends Comparable<T> > {
 			{
 				String lineaActual = arcosCargar.get(i);
 				String[] valores = lineaActual.split(" ");
-				String id = valores[0];
+				int id = Integer.parseInt(valores[0]);
 				for(int j = 1; j < valores.length; j++)
 				{
 					
-					
-					if (grafoCarga.getInfoVertex(id)!=null && grafoCarga.getInfoVertex(valores[j])!=null) {
+				int x = Integer.parseInt( valores[j]);
+					if (grafoCarga.getInfoVertex(id)!=null && grafoCarga.getInfoVertex(x)!=null) {
 						
 						
 						double pLonIn = grafoCarga.getInfoVertex(id).getLongitud();
 						double pLatIn = grafoCarga.getInfoVertex(id).getLatitud();
-						double pLonFi = grafoCarga.getInfoVertex(valores[j]).getLongitud();
-						double pLatFi = grafoCarga.getInfoVertex(valores[j]).getLatitud();
+						double pLonFi = grafoCarga.getInfoVertex(x).getLongitud();
+						double pLatFi = grafoCarga.getInfoVertex(x).getLatitud();
 
 						double pCosto = Haversine.distance(pLatIn, pLonIn, pLatFi, pLonFi);
-						grafoCarga.addEdge(id, valores[j], new InfoArco(pCosto));
+						grafoCarga.addEdge(id, x, pCosto);
 					}
 					
 				}

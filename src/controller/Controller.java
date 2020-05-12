@@ -41,9 +41,11 @@ public class Controller {
 			case 1:
 				view.printMessage(" Cargando Datos, Porfavor paciencia..");
 				modelo.cargarGrafo();
-				
-				view.printMessage(" ");
+				view.printMessage("Numero de Vertices "+modelo.grafoCarga.V());
+
+				view.printMessage(" Numero de arcos"+modelo.grafoCarga.E());
 	
+				
 				view.printMessage("Grafo cargado exitosamente");
 				view.printMessage("Le pedimos porfavor revise el código del Modelo en caso de necesitar entender que pasó");
 				break;
